@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var arr = [
+      {
+        id: 1,
+        name: '1级',
+        children: [
+          {
+            id: 11,
+            parentId: 1
+          },
+          {
+            id: 13,
+            parentId: 1
+          },
+          {
+            id: 12,
+            parentId: 1,
+            name: '2级',
+            children: [
+              {
+                id: 121,
+                parentId: 12,
+                name: '3级',
+                children: [
+                  {
+                    id: 1211,
+                    parentId: 121,
+                    name: '4级',
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 2,
+        name: '21级',
+      }
+    ]
+    let final = familyTree(arr, 1211)
+    console.log('final', final)
+    //查找父节点
+    function familyTree(arr1, id) {
+      var temp = []
+      var forFn = function (arr, id) {
+        for (var i = 0; i < arr.length; i++) {
+          var item = arr[i]
+          if (item.id === id) {
+            temp.push(item)
+            forFn(arr1, item.parentId)
+            break
+          } else {
+            if (item.children) {
+              forFn(item.children, id)
+            }
+          }
+        }
+      }
+      forFn(arr1, id)
+      return temp
+    }
+  </script>
+</body>
+
+</html>

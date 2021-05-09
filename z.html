@@ -1,77 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-
-<body>
-  <script>
-    var arr = [
-      {
-        id: 1,
-        name: '1级',
-        children: [
-          {
-            id: 11,
-            parentId: 1
-          },
-          {
-            id: 13,
-            parentId: 1
-          },
-          {
-            id: 12,
-            parentId: 1,
-            name: '2级',
-            children: [
-              {
-                id: 121,
-                parentId: 12,
-                name: '3级',
-                children: [
-                  {
-                    id: 1211,
-                    parentId: 121,
-                    name: '4级',
-                  }
-                ]
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 树形数据过滤
+       * @param {array} nodes 节点
+       * @param {fn} queryFn 函数，返回boolean
+       */
+      function filterTreeData(nodes, queryFn) {
+        let result = [];
+        for (let i = 0; i < nodes.length; i++) {
+          let node = nodes[i];
+          if (queryFn(node)) {
+            if (node.children) {
+              let newChildren = filterTreeData(node.children, queryFn);
+              if (newChildren.length) {
+                node.children = newChildren;
               }
-            ]
-          }
-        ]
-      },
-      {
-        id: 2,
-        name: '21级',
-      }
-    ]
-    let final = familyTree(arr, 1211)
-    console.log('final', final)
-    //查找父节点
-    function familyTree(arr1, id) {
-      var temp = []
-      var forFn = function (arr, id) {
-        for (var i = 0; i < arr.length; i++) {
-          var item = arr[i]
-          if (item.id === id) {
-            temp.push(item)
-            forFn(arr1, item.parentId)
-            break
-          } else {
-            if (item.children) {
-              forFn(item.children, id)
+            }
+            result.push(node);
+          } else if (node.children) {
+            let newChildren = filterTreeData(node.children, queryFn);
+            if (newChildren.length) {
+              node.children = newChildren;
+              result.push(node);
             }
           }
         }
+        return result;
       }
-      forFn(arr1, id)
-      return temp
-    }
-  </script>
-</body>
+      const data = [
+        {
+          id: 1,
+          name: "1John Brown sr",
+          children: [
+            {
+              id: 11,
+              name: "11John Brown",
+            },
+            {
+              id: 12,
+              name: "12John Brown jr.",
+              children: [
+                {
+                  id: 121,
+                  name: "121Jimmy Brown",
+                },
+                {
+                  id: 122,
+                  name: "122Jimmy Brown",
+                  children: [
+                    {
+                      id: 1221,
+                      name: "1221Jimmy Brown",
+                    },
+                    {
+                      id: 1222,
+                      name: "1221Jimmy Brown",
+                      children: [
+                        {
+                          id: 12221,
+                          name: "12221Jimmy Brown",
+                        },
+                        {
+                          id: 12222,
+                          name: "12222Jimmy Brown",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              id: 13,
+              name: "13Jim Green sr.",
+              children: [
+                {
+                  id: 131,
+                  name: "131Jim Green",
+                  children: [
+                    {
+                      id: 1311,
+                      name: "1311Jim Green jr.",
+                    },
+                    {
+                      id: 1312,
+                      name: "1312Jimmy Green sr.",
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              id: 14,
+              name: "14Jim Green sr.",
+              children: [
+                {
+                  id: 141,
+                  name: "141Jim Green",
+                  children: [
+                    {
+                      id: 1411,
+                      name: "1311Jim Green jr.",
+                    },
+                    {
+                      id: 1412,
+                      name: "1312Jimmy Green sr.",
+                    },
+                  ],
+                },
+                {
+                  id: 142,
+                  name: "142Jimmy Green sr.",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: 2,
+          name: "2Joe Black",
+        },
+      ];
 
+      const ids = [12, 121, 1222, 1311];
+      const filtersData = filterTreeData(data, (node) =>
+        ids.find((e) => e === node.id)
+      );
+      // console.log("filtersData", filtersData);
+      // console.log(!!{ name: 123 });
+
+      let str = "123456.";
+      const keyword = "56.";
+      const index = str.indexOf(keyword);
+      const beforeStr = str.substr(0, index);
+      const afterStr = str.substr(index + keyword.length);
+      console.log(index, beforeStr, afterStr);
+    </script>
+  </body>
 </html>

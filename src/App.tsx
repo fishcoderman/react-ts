@@ -1,10 +1,10 @@
 import { FC } from "react";
-import Demo from "./About/index";
+import Main from "./Main/index";
 import "./App.css";
 
 const App: FC = () => (
   <div className="App">
-    <Demo> </Demo>
+    <Main></Main>
   </div>
 );
 

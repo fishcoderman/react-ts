@@ -18,12 +18,12 @@
         for (let i = 0; i < nodes.length; i++) {
           let node = nodes[i];
           if (queryFn(node)) {
-            if (node.children) {
-              let newChildren = filterTreeData(node.children, queryFn);
-              if (newChildren.length) {
-                node.children = newChildren;
-              }
-            }
+            // if (node.children) {
+            //   let newChildren = filterTreeData(node.children, queryFn);
+            //   if (newChildren.length) {
+            //     node.children = newChildren;
+            //   }
+            // }
             result.push(node);
           } else if (node.children) {
             let newChildren = filterTreeData(node.children, queryFn);
@@ -39,6 +39,7 @@
         {
           id: 1,
           name: "1John Brown sr",
+          show: true,
           children: [
             {
               id: 11,
@@ -129,20 +130,6 @@
           name: "2Joe Black",
         },
       ];
-
-      const ids = [12, 121, 1222, 1311];
-      const filtersData = filterTreeData(data, (node) =>
-        ids.find((e) => e === node.id)
-      );
-      // console.log("filtersData", filtersData);
-      // console.log(!!{ name: 123 });
-
-      let str = "123456.";
-      const keyword = "56.";
-      const index = str.indexOf(keyword);
-      const beforeStr = str.substr(0, index);
-      const afterStr = str.substr(index + keyword.length);
-      console.log(index, beforeStr, afterStr);
     </script>
   </body>
 </html>

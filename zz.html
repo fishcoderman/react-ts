@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const data = [
+        {
+          id: 1,
+          name: "13Jim Green sr.",
+          show: true,
+          children: [
+            {
+              id: 11,
+              name: "131Jim Green",
+              show: true,
+              children: [
+                {
+                  id: 111,
+                  name: "131Jim Green",
+                  show: false,
+                  children: [
+                    {
+                      id: 1111,
+                      name: "131Jim Green",
+                      show: false,
+                    },
+                    {
+                      id: 1121,
+                      name: "131Jim Green",
+                      show: false,
+                    },
+                  ],
+                },
+                {
+                  id: 112,
+                  name: "131Jim Green",
+                  show: false,
+                },
+              ],
+            },
+            {
+              id: 12,
+              name: "131Jim Green",
+              show: false,
+            },
+          ],
+        },
+        {
+          id: 2,
+          name: "13Jim Green sr.",
+          show: false,
+        },
+      ];
+
+      const tree = [
+        {
+          id: 11,
+          name: "131Jim Green",
+          show: false,
+          children: [
+            {
+              id: 111,
+              name: "131Jim Green",
+              show: true,
+              children: [
+                {
+                  id: 1111,
+                  name: "131Jim Green",
+                  show: false,
+                },
+                {
+                  id: 1121,
+                  name: "131Jim Green",
+                  show: false,
+                  children: [
+                    {
+                      id: 11211,
+                      name: "131Jim Green",
+                      show: false,
+                    },
+                    {
+                      id: 11212,
+                      name: "131Jim Green",
+                      show: false,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              id: 112,
+              name: "131Jim Green",
+              show: false,
+            },
+          ],
+        },
+        {
+          id: 12,
+          name: "131Jim Green",
+          show: false,
+        },
+      ];
+
+      // const res = loopTree(tree);
+      // console.log("res", res);
+
+      function loopTree(data) {
+        const state = data.every((e) => !e.show);
+        if (state) {
+          for (let i = 0; i < data.length; i++) {
+            const item = data[i];
+            if (item.children && item.children.length) {
+              return loopTree(item.children);
+            } else {
+              return state;
+            }
+          }
+        } else {
+          return false;
+        }
+      }
+
+      function filterData(data) {
+        data.forEach((item) => {
+          // debugger;
+          let state;
+          if (item.show && item.children && item.children.length) {
+            // debugger;
+            state = loopTree(item.children);
+            if (state) {
+              item.delete = true;
+            }
+          }
+          if (!state) {
+            // debugger;
+            if (item.children && item.children.length) {
+              filterData(item.children);
+            }
+          }
+        });
+      }
+
+      filterData(data);
+      console.log("res", data);
+
+      // 全部为false 才能删除
+      // 满足条件之后 直接判断底下是否全为 false
+    </script>
+  </body>
+</html>

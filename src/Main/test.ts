@@ -37,6 +37,10 @@ export const ExchangeTypeMap: Record<ExchangeType, string> = {
   [ExchangeType.HERDQUARTERS]: '总部',
 };
 
-
+//  git diff
 
 console.log('arr', ExchangeTypeMap['1'])
+
+export interface Info {
+  names: string
+}

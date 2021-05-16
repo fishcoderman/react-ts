@@ -134,6 +134,7 @@
             state = loopTree(item.children);
             if (state) {
               item.delete = true;
+              item.children = [];
             }
           }
           if (!state) {
